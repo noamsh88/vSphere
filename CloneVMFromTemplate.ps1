@@ -16,7 +16,7 @@ $CredFilePath = "D:\vCenter\Credentials.xml"
 if (!$VMList -Or !$TemplateName) {
   $scriptName = $MyInvocation.MyCommand.Name
   Write-Host "Usage:"
-  Write-Host "pwsh $scriptName <VM Name/List> <Template Name> "
+  Write-Host "./$scriptName <VM Name/List> <Template Name> "
   Write-Host "e.g."
   Write-Host "Single Host:      ./$scriptName VM1 VM-TST-TEMPLATE"
   Write-Host "Multiple Hosts:   ./$scriptName VM1,VM2,VM3 VM-TST-TEMPLATE"
@@ -50,7 +50,7 @@ if (!$TemplateExists) {
 foreach($vm in $VMList.split(','))
 {
  # Validate if VM name exist on vCenter
- $Exists = get-vm -name $vm -ErrorAction SilentlyContinue
+ $Exists = Get-VM -name $vm -ErrorAction SilentlyContinue
  If ($Exists){
     Write-Host "$vm VM Name is already exist $vCenterName vCenter, Please enter new VM name to be created or remove existing VM and re-run, exiting..."
     exit 1
