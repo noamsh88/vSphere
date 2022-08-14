@@ -26,7 +26,6 @@ $VC_Connect = Connect-Viserver $vCenterName -Credential $Credentials
 
 foreach($vm in $VMList.split(','))
 {
-   Write-Host "Checking $vm VM"
    # Validate if VM exist on vCenter
    $Exists = Get-VM -name $vm -ErrorAction SilentlyContinue
    If ($Exists){
