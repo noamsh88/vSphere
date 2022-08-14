@@ -2,6 +2,7 @@
 #Script login to vCenter and will clean VM snapshots for single or multiple VMs according to argument entered#
 ##############################################################################################################
 $VMList = $args[0]
+$CredFilePath = "D:\vCenter\Credentials.xml"
 ##############################################################################################
 
 # Validate if argument entered is not null
@@ -10,8 +11,8 @@ if (!$VMList) {
   Write-Host "Usage:"
   Write-Host "$scriptName <VM Name/List> <SnapshotName>"
   Write-Host "e.g."
-  Write-Host "Single Host:      pwsh $scriptName VM1"
-  Write-Host "Multiple Hosts:   pwsh $scriptName VM1,VM2,VM3"
+  Write-Host "Single Host:      ./$scriptName VM1"
+  Write-Host "Multiple Hosts:   ./$scriptName VM1,VM2,VM3"
   exit 1
 }
 
@@ -33,7 +34,7 @@ $VC_Connect = Connect-Viserver $vCenterName -Credential $Credentials
 foreach($vm in $VMList.split(','))
 {
    # Validate if VM exist on vCenter
-   $Exists = get-vm -name $vm -ErrorAction SilentlyContinue
+   $Exists = Get-VM -name $vm -ErrorAction SilentlyContinue
    If (!$Exists){
     Write-Host "$vm VM not found at $vCenterName vCenter, skipping.."
     Continue
