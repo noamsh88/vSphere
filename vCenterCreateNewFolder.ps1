@@ -1,8 +1,10 @@
-##############################################################################################
-#Script login to vCenter and validate if given directory name exist or not
-##############################################################################################
+############################################################################################
+#Script login to vCenter and create directory under home directory specified ($HomeDirName)#
+############################################################################################
 $DirName = $args[0]
+##############################################################################################
 $CredFilePath = "D:\vCenter\Credentials.xml"
+$HomeDirName = "Dev-VMs" # Specify Home directory for new directory that going to be created
 ##############################################################################################
 
 # Validate if argument entered is not null
@@ -11,7 +13,7 @@ if (!$DirName) {
   Write-Host "Usage:"
   Write-Host "$scriptName <Directory Name>"
   Write-Host "e.g."
-  Write-Host "pwsh $scriptName NC30"
+  Write-Host "pwsh $scriptName Env1"
   exit 1
 }
 
@@ -22,11 +24,11 @@ $vCenterName = '<vCenter URL>'
 $Credentials = Import-CliXml -Path "$CredFilePath"
 $VC_Connect = Connect-Viserver $vCenterName -Credential $Credentials
 
+# Create directory name ($DirName) if not exist on vCenter
 $DirExist = Get-Folder -Type VM | Where-Object {$_.name -eq $DirName}
-
 if ($DirExist -eq $null) {
-    Write-Host "$foldername Folder doesn't exist" -BackgroundColor Red
+    New-Folder -Name "$DirName" -Location (Get-Folder $HomeDirName)
 }
 else {
-    Write-Host "$DirName Folder exists" -BackgroundColor DarkGreen
+    Write-Host "$DirName Folder exists already" -BackgroundColor DarkGreen
 }
