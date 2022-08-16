@@ -33,7 +33,7 @@ If (! $Exists){
 }
 
 # Get NN1 VM Name IP Address
-$VM_IP= Get-VM $NN1_Hostname | Select @{N="IP Address";E={@($_.guest.IPAddress[0])}} | ft -hide | Out-String
+$VM_IP= Get-VM $VM_Name | Select @{N="IP Address";E={@($_.guest.IPAddress[0])}} | ft -hide | Out-String
 $VM_IP = $VM_IP.Trim()
 
 Write-Host "$VM_Name IP address is :  $VM_IP"
