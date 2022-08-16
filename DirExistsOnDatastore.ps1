@@ -9,9 +9,9 @@ $CredFilePath = "D:\vCenter\Credentials.xml"
 if (!$DirName) {
   $scriptName = $MyInvocation.MyCommand.Name
   Write-Host "Usage:"
-  Write-Host "$scriptName <Directory Name>"
+  Write-Host "./$scriptName <Directory Name>"
   Write-Host "e.g."
-  Write-Host "pwsh $scriptName NC30"
+  Write-Host "./$scriptName NC30"
   exit 1
 }
 
