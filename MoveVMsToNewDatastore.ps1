@@ -6,8 +6,8 @@ $NewDatastore = $args[1]
 $CredFilePath = "D:\vCenter\Credentials.xml"
 #######################################################
 
-# Validate if argument entered is not null
-if (!$VMList) {
+# Validate required paramters values are not null
+if (!$VMList -Or !$NewDatastore) {
   $scriptName = $MyInvocation.MyCommand.Name
   Write-Host "Usage:"
   Write-Host "$scriptName <VM Name/List>  <new Datastore name to be moved>"
