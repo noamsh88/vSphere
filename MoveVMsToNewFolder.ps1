@@ -17,6 +17,13 @@ if (!$DirName -Or !$VMList) {
   exit 1
 }
 
+# Load VMWare module
+if (!(Get-Module -Name VMware.VimAutomation.Core) -and (Get-Module -ListAvailable -Name VMware.VimAutomation.Core))
+{
+    Write-Output "loading the VMware Core Module..."
+    Import-Module -Name VMware.VimAutomation.Core -ErrorAction Stop
+}
+
 Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false
 
 # Create Connection to vCenter
@@ -42,7 +49,7 @@ foreach($vm in $VMList.split(','))
    $Exists = Get-VM -name $vm -ErrorAction SilentlyContinue
    If ($Exists){
     Write-Host "Moving VM: $vm to $DirName directory"
-    Move-VM -VM $vm -InventoryLocation "$DirName"
+    New-Folder -Name "$DirName" -Location (Get-Folder -Name $HomeDirName | Select -first 1)
    }
    else {
     Write-Host "$vm VM NOT FOUND at $vCenterName vCenter, exiting.."
